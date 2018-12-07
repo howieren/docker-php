@@ -1,18 +1,26 @@
-version: '2'
+version: '3'
 services:
-  # mysql:
-  #   build: ./mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: pass
-  #   volumes:
-  #     - db:/var/lib/mysql
+  mysql:
+    build: ./mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+    volumes:
+      - db:/var/lib/mysql
   php:
     build: ./php
     ports:
       - '80:80'
     volumes:
       - ./html:/var/www/html
-    # depends_on:
-    #   - mysql
+    depends_on:
+      - mysql
+  composer:
+    image: "composer"
+    volumes:
+      - "./html:/app"
+    command: 
+      - "config -g repo.packagist composer https://packagist.phpcomposer.com"
+      - "install --ignore-platform-reqs"
+    tty: true
 volumes:
   db:
