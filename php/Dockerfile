@@ -1,5 +1,6 @@
 FROM php:7.2-apache
 COPY php.ini /usr/local/etc/php/
+COPY sites.apache.conf /etc/apache2/sites-enabled/000-default.conf
 RUN cp /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/rewrite.load
 # RUN apt-get update \
 #   && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev \
